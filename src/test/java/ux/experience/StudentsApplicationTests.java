@@ -1,4 +1,4 @@
-package ux.experience.students;
+package ux.experience;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
