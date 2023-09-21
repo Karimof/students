@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ux.experience.domain.Students;
 import ux.experience.repositories.StudentsRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ public class StudentsService {
     }
 
     public Students save(Students student){
+        student.setCreatedAt(LocalDateTime.now());
         return studentsRepository.save(student);
     }
 

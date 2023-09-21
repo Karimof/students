@@ -30,7 +30,7 @@ public class StudiesResource {
     }
 
 
-    @GetMapping("/studies/page/{page}")
+    @GetMapping("/studies")
     public ResponseEntity<List<Studies>> getAllStudies(@PathVariable(required = false) Integer page) {
         List<Studies> result = studiesService.findAll();
         return ResponseEntity.ok(result);

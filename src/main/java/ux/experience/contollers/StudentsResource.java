@@ -2,19 +2,24 @@ package ux.experience.contollers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ux.experience.domain.Students;
+import ux.experience.services.ImageUploadService;
 import ux.experience.services.StudentsService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 public class StudentsResource {
 
     private final StudentsService studentsService;
+    private final ImageUploadService imageUploadService;
 
-    public StudentsResource(StudentsService studentsService) {
+    public StudentsResource(StudentsService studentsService, ImageUploadService imageUploadServise) {
         this.studentsService = studentsService;
+        this.imageUploadService = imageUploadServise;
     }
 
     @PostMapping("/students")
@@ -29,7 +34,13 @@ public class StudentsResource {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/students/page/{page}")
+    @PostMapping(value = "/avatar")
+    public ResponseEntity<Void> uploadAvatar(@RequestPart(value = "file") MultipartFile file) {
+        imageUploadService.save(file);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/students")
     public ResponseEntity<List<Students>> getAllStudents(@PathVariable(required = false) Integer page) {
         List<Students> result = studentsService.findAll();
         return ResponseEntity.ok(result);
